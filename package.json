@@ -1,0 +1,24 @@
+{
+  "name": "visitors-app",
+  "version": "1.0.0",
+  "description": "visitor-app",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SalomonSada/visitors-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SalomonSada/visitors-app/issues"
+  },
+  "homepage": "https://github.com/SalomonSada/visitors-app#readme"
+}
