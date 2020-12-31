@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const config = require('config');
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
@@ -90,8 +89,8 @@ router.get('/:visitor_id', auth, async (req, res) => {
   }
 });
 
-// @route   DELETE api/profile
-// @desc    Delete profile, user & posts
+// @route   DELETE api/visitor
+// @desc    Delete visitor
 // @access  Private
 router.delete('/:visitor_id', auth, async (req, res) => {
   try {
