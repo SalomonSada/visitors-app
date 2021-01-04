@@ -6,6 +6,7 @@ import {
   GET_VISITOR,
   GET_VISITORS,
   VISITOR_ERROR,
+  //CHANGE_SEARCH_FIELD,
 } from './types';
 
 // Get current users profile
@@ -28,9 +29,10 @@ export const getCurrentVisitor = () => async (dispatch) => {
 
 // Get all visitor
 export const getAllVisitors = () => async (dispatch) => {
-  dispatch({ type: CLEAR_VISITOR });
   try {
     const res = await axios.get('/api/visitor');
+
+   // console.log(res.data[0].name);
 
     dispatch({
       type: GET_VISITORS,
@@ -85,3 +87,5 @@ export const createVisitor = (formData, history) => async (dispatch) => {
     });
   }
 };
+
+// filtered

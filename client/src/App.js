@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Fragment, useEffect } from 'react';
 
 import './App.css';
+import PrivateRoute from './componets/routing/PrivateRoute';
 import Navbar from './componets/layout/Navbar';
 import Alert from './componets/layout/Alert';
 import Login from './componets/auth/Login';
@@ -33,14 +34,14 @@ const App = () => {
           <section className="container">
             <Alert />
             <Switch>
-              <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route
+              <Route exact path="/register" component={Register} />
+              <PrivateRoute
                 exact
                 path="/register_visitor"
                 component={RegisterVisitor}
               />
-              <Route exact path="/visitors" component={Visitors} />
+              <PrivateRoute exact path="/visitors" component={Visitors} />
             </Switch>
           </section>
         </Fragment>
