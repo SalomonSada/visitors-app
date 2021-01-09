@@ -34,7 +34,7 @@ const App = () => {
             <Alert />
             <Switch>
               <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
+              <Route exact path="/" component={Login} />
               <Route
                 exact
                 path="/register_visitor"

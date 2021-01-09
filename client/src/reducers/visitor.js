@@ -3,12 +3,14 @@ import {
   GET_VISITORS,
   VISITOR_ERROR,
   CLEAR_VISITOR,
+  CHANGE_SEARCH_FIELD,
 } from '../actions/types';
 
 const initialState = {
   visitor: null,
   visitors: [],
   loading: true,
+  searchField: '',
 };
 
 export default function visitor(state = initialState, action) {
@@ -16,7 +18,7 @@ export default function visitor(state = initialState, action) {
 
   switch (type) {
     case GET_VISITOR:
-      // case UPDATE_PROFILE:
+      // case UPDATE_VISITOR:
       return {
         ...state,
         visitor: payload,
@@ -29,6 +31,9 @@ export default function visitor(state = initialState, action) {
         visitors: payload,
         loading: false,
       };
+
+    case CHANGE_SEARCH_FIELD:
+      return { ...state, searchField: payload };
 
     case VISITOR_ERROR:
       return {

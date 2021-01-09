@@ -6,6 +6,7 @@ import {
   GET_VISITOR,
   GET_VISITORS,
   VISITOR_ERROR,
+  CHANGE_SEARCH_FIELD
 } from './types';
 
 // Get current users profile
@@ -32,6 +33,7 @@ export const getAllVisitors = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/visitor');
 
+    
     dispatch({
       type: GET_VISITORS,
       payload: res.data,
@@ -84,4 +86,12 @@ export const createVisitor = (formData, history) => async (dispatch) => {
       payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
+};
+
+// Change search Field
+export const setSearchField = (text) => {
+  return {
+    type: CHANGE_SEARCH_FIELD,
+    payload: text,
+  };
 };

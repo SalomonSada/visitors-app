@@ -27,21 +27,21 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   // Redirect if Logged in
-  if (isAuthenticated) {
-    return <Redirect to="/register_visitor" />;
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
   }
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
+      <h1 className="large text-primary">Registrate</h1>
       <p className="lead">
-        <i className="fas fa-user m-1"></i>Create an User
+        <i className="fas fa-user m-1"></i>Crea tu Usuario
       </p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Nombre"
             name="name"
             value={name}
             onChange={(e) => onChange(e)}
@@ -51,7 +51,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Correo Electrónico"
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
@@ -61,7 +61,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             name="password"
             /*  minLength="6" */
             value={password}
@@ -71,19 +71,23 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirma tu Contraseña"
             name="password2"
             /*  minLength="6" */
             value={password2}
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type="submit" value="Register" className="btn btn-primary btn-altern" />
+        <input
+          type="submit"
+          value="Registrar"
+          className="btn btn-primary btn-altern"
+        />
       </form>
       <p className="my-1">
-        Already have an account?{' '}
+        ¿Ya tienes una cuenta?{' '}
         <Link to="/login" className="redirect">
-          Sign in
+          Iniciar Sesión
         </Link>
       </p>
     </Fragment>

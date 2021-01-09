@@ -27,15 +27,15 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign In</h1>
+      <h1 className="large text-primary">Iniciar Sesión</h1>
       <p className="lead">
-        <i className="fas fa-user m-1"></i>Sign into your account
+        <i className="fas fa-user m-1"></i>Introduce los datos de tu cuenta
       </p>
       <form onSubmit={(e) => onSubmit(e)} className="form">
         <div className="form-group">
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Correo Electrónico"
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
@@ -45,19 +45,19 @@ const Login = ({ login, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             name="password"
             minLength="6"
             value={password}
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type="submit" value="Login" className="btn btn-primary" />
+        <input type="submit" value="Iniciar Sesión" className="btn btn-primary" />
       </form>
       <p className="my-1">
-        Don't have an account?{' '}
+        ¿No tienes una cuenta?{' '}
         <Link to="/register" className="redirect">
-          Sign up
+          Comunicate con un Usuario
         </Link>
       </p>
     </Fragment>

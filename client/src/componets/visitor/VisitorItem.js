@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
-const VisitorItem = ({ visitor: { name, email, cellphone, direction } }) => {
+const VisitorItem = ({ name, email, cellphone, direction, date }) => {
   return (
     <Fragment>
       <div className="profile bg-light">
@@ -9,15 +9,18 @@ const VisitorItem = ({ visitor: { name, email, cellphone, direction } }) => {
           <h2>{name}</h2>
           <p>{email}</p>
           <p>{cellphone}</p>
-          <p>{direction}</p>
+          <p>
+            <small className="textbold">ZipCode:</small> {direction}
+          </p>
+          <p>{date}</p>
         </div>
       </div>
     </Fragment>
   );
 };
 
-VisitorItem.propTypes = {
+/* VisitorItem.propTypes = {
   visitor: PropTypes.object.isRequired,
-};
+}; */
 
 export default VisitorItem;
