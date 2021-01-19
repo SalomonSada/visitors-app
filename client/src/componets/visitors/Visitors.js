@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getAllVisitors, setSearchField } from '../../actions/visitor';
 import VisitorList from './VisitorList';
-import { filter } from 'lodash';
+//import { filter } from 'lodash';
 //import _ from 'lodash';
 
 const Visitors = ({
@@ -13,54 +13,29 @@ const Visitors = ({
   setSearchField,
 }) => {
   const [formData, setFormData] = useState({
-    filterBy: 2,
+    filterBy: 0,
   });
 
   const { filterBy } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    //  filterFunction();
   };
 
   useEffect(() => {
     getAllVisitors();
   }, [getAllVisitors]);
 
-  const filteredVisitorsByName = visitors.filter((visitor) => {
-    return visitor.name.toLowerCase().includes(searchField.toLowerCase());
-  });
-
-  const filteredVisitorByZip = visitors.filter((visitor) => {
-    return visitor.zip.toString().includes(searchField);
-  });
-
-  const filterFunction = () => {
-    if (filterBy === 1) {
-      console.log('NAME::::', filteredVisitorsByName);
-      return filteredVisitorsByName;
-    }
-    if (filterBy === 2) {
-      console.log('ZIP::::', filteredVisitorByZip);
-      return filteredVisitorByZip;
-    } else {
-      console.log('FILTERBY::::', filterBy);
-      console.log('ALL::::', visitors);
-      return visitors;
-    }
-    /* switch (filterBy) {
-      case 1:
-        console.log('NAME::::', filteredVisitorsByName);
-        return filteredVisitorsByName;
-      case 2:
-        console.log('ZIP::::', filteredVisitorByZip);
-        return filteredVisitorByZip;
+  const filteredVisitor = visitors.filter((visitor) => {
+    switch (filterBy) {
+      case '1':
+        return visitor.name.toLowerCase().includes(searchField.toLowerCase());
+      case '2':
+        return visitor.zip.toString().includes(searchField);
       default:
-        console.log('FILTERBY::::', filterBy);
-        console.log('ALL::::', visitors);
         return visitors;
-    } */
-  };
+    }
+  });
 
   return (
     <Fragment>
@@ -99,7 +74,7 @@ const Visitors = ({
 
           <div className="profiles">
             {visitors.length > 0 ? (
-              <VisitorList visitorL={filterFunction()} />
+              <VisitorList visitorL={filteredVisitor} />
             ) : (
               <Spinner />
             )}
