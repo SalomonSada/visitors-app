@@ -13,7 +13,6 @@ const VisitorSchema = new mongoose.Schema({
   // todo: be able to add more than one. at email & cellphone (could be with an array)
   email: {
     type: String,
-    required: true,
     unique: true,
   },
   cellphone: {
@@ -22,7 +21,22 @@ const VisitorSchema = new mongoose.Schema({
   },
   direction: {
     type: String,
+    required: false,
+  },
+  zip: {
+    type: Number,
     required: true,
+  },
+  birthday: {
+    type: Date,
+  },
+  sons: {
+    amount: {
+      type: Number,
+    },
+    ages: {
+      type: [Number],
+    },
   },
   date: {
     type: Date,

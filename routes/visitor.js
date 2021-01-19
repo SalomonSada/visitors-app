@@ -16,7 +16,7 @@ router.post(
       check('name', 'Name is required').not().isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
       check('cellphone', 'Cellphone is required').not().isEmpty(),
-      check('direction', 'Direction is required').not().isEmpty(),
+      check('zip', 'Zipcode is required').not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -25,29 +25,48 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, cellphone, direction } = req.body;
+    const {
+      name,
+      email,
+      cellphone,
+      direction,
+      zip,
+      birthday,
+      amount,
+      ages,
+      _id,
+    } = req.body;
 
+    // visitor object
     const visitorFields = {};
     visitorFields.user = req.user.id;
     if (name) visitorFields.name = name;
     if (email) visitorFields.email = email;
     if (cellphone) visitorFields.cellphone = cellphone;
     if (direction) visitorFields.direction = direction;
+    if (zip) visitorFields.zip = zip;
+    if (birthday) visitorFields.birthday = birthday;
+
+    // sons object
+    visitorFields.sons = {};
+    if (amount) visitorFields.sons.amount = amount;
+    if (ages)
+      visitorFields.sons.ages = ages.split(',').map((skill) => skill.trim());
 
     try {
-      // check if the visitor exist
-      let checkVisitor = await Visitor.findOne({ email });
-      if (checkVisitor) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Visitor already exists' }] });
+      //let visitor = await Visitor.findOne({ _id });
+      //console.log(req.user.id
+
+      // Update
+      let visitor = await Visitor.findOneAndUpdate(
+        { _id },
+        { $set: visitorFields },
+        { new: true }
+      );
+      if (!visitor) {
+        visitor = new Visitor(visitorFields);
+        await visitor.save();
       }
-
-      let visitor = await Visitor.findOne({ user: req.user.id });
-
-      visitor = new Visitor(visitorFields);
-
-      await visitor.save();
 
       res.json(visitor);
     } catch (err) {

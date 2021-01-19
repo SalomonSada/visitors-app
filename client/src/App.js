@@ -7,7 +7,8 @@ import Alert from './componets/layout/Alert';
 import Login from './componets/auth/Login';
 import Register from './componets/auth/Register';
 import RegisterVisitor from './componets/visitor/RegisterVisitor';
-import Visitors from './componets/visitor/Visitors';
+import UpdateVisitor from './componets/visitor/UpdateVisitor';
+import Visitors from './componets/visitors/Visitors';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -39,6 +40,11 @@ const App = () => {
                 exact
                 path="/register_visitor"
                 component={RegisterVisitor}
+              />
+              <Route
+                exact
+                path="/update_visitor/:_id"
+                component={UpdateVisitor}
               />
               <Route exact path="/visitors" component={Visitors} />
             </Switch>

@@ -45,7 +45,7 @@ export default function visitor(state = initialState, action) {
     case CLEAR_VISITOR:
       return {
         ...state,
-        profile: null,
+        visitor: null,
         loading: false,
       };
 

@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-  --primary-color: #5a5353;
+  --primary-color: #53555a;
   --dark-color: #270900;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -125,6 +125,10 @@ img {
 }
 .my-3 {
   margin: 3rem 0;
+}
+
+.my-t-1 {
+  margin-top: 1.5rem;
 }
 
 .btn {
@@ -357,8 +361,14 @@ button {
 .textbold {
   font-weight: bolder;
 }
+
 /* Mobile Styles */
 @media (max-width: 700px) {
+  .left {
+    text-align: left;
+    justify-content: left;
+  }
+
   .profiles {
     display: inline-block;
     justify-content: center;
