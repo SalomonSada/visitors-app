@@ -362,6 +362,11 @@ button {
   font-weight: bolder;
 }
 
+.construccion {
+  text-decoration: line-through;
+  color: #dc3545;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .left {

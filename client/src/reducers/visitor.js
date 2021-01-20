@@ -4,6 +4,7 @@ import {
   VISITOR_ERROR,
   CLEAR_VISITOR,
   CHANGE_SEARCH_FIELD,
+  CHANGE_SEARCH_FIELD2,
 } from '../actions/types';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   visitors: [],
   loading: true,
   searchField: '',
+  searchFieldToDate: '',
 };
 
 export default function visitor(state = initialState, action) {
@@ -34,6 +36,9 @@ export default function visitor(state = initialState, action) {
 
     case CHANGE_SEARCH_FIELD:
       return { ...state, searchField: payload };
+
+    case CHANGE_SEARCH_FIELD2:
+      return { ...state, searchFieldToDate: payload };
 
     case VISITOR_ERROR:
       return {

@@ -7,6 +7,7 @@ import {
   GET_VISITORS,
   VISITOR_ERROR,
   CHANGE_SEARCH_FIELD,
+  CHANGE_SEARCH_FIELD2,
 } from './types';
 
 // Get current visitor
@@ -94,14 +95,6 @@ export const createVisitor = (formData, history, edit = false) => async (
   }
 };
 
-// Change search Field
-export const setSearchField = (text) => {
-  return {
-    type: CHANGE_SEARCH_FIELD,
-    payload: text,
-  };
-};
-
 // delete visitor
 export const deleteVisitor = (id) => async (dispatch) => {
   if (window.confirm('¿Estas seguro? ¡¡Esto no puede deshacerse!!')) {
@@ -122,4 +115,20 @@ export const deleteVisitor = (id) => async (dispatch) => {
       });
     }
   }
+};
+
+// Change search Field
+export const setSearchField = (text) => {
+  return {
+    type: CHANGE_SEARCH_FIELD,
+    payload: text,
+  };
+};
+
+// Change search Field 2
+export const setSearchField2 = (text) => {
+  return {
+    type: CHANGE_SEARCH_FIELD2,
+    payload: text,
+  };
 };

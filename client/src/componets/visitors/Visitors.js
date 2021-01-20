@@ -2,15 +2,20 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { getAllVisitors, setSearchField } from '../../actions/visitor';
+import {
+  getAllVisitors,
+  setSearchField,
+  setSearchField2,
+} from '../../actions/visitor';
 import VisitorList from './VisitorList';
 //import { filter } from 'lodash';
 //import _ from 'lodash';
 
 const Visitors = ({
-  visitor: { visitors, loading, searchField },
+  visitor: { visitors, loading, searchField, searchFieldToDate },
   getAllVisitors,
   setSearchField,
+  setSearchField2,
 }) => {
   const [formData, setFormData] = useState({
     filterBy: 0,
@@ -32,6 +37,12 @@ const Visitors = ({
         return visitor.name.toLowerCase().includes(searchField.toLowerCase());
       case '2':
         return visitor.zip.toString().includes(searchField);
+      case '3':
+        let from = new Date(searchField).getTime(); // miliseconds from 1970 to the date in  searchFiled
+        let to = new Date(searchFieldToDate).getTime();
+        let time = new Date(visitor.date).getTime();
+        if (searchField === '' || searchFieldToDate === '') return visitors;
+        return from < time && time <= to + 86400000; // + a day in miliseconds
       default:
         return visitors;
     }
@@ -58,10 +69,11 @@ const Visitors = ({
               <option value={0}>Seleccionar Filtro</option>
               <option value={1}>Nombre</option>
               <option value={2}>ZipCode</option>
+              <option value={3}>Fecha</option>
             </select>
           </div>
 
-          {filterBy > 0 && (
+          {filterBy > 0 && filterBy < 3 && (
             <div className="form form-group search-input">
               <input
                 type="text"
@@ -70,6 +82,29 @@ const Visitors = ({
                 onChange={(e) => setSearchField(e.target.value)}
               />
             </div>
+          )}
+
+          {filterBy > 2 && (
+            <Fragment>
+              <small>Desde</small>
+              <div className="form form-group search-input">
+                <input
+                  type="date"
+                  placeholder={`Filtre aca`}
+                  name="name"
+                  onChange={(e) => setSearchField(e.target.value)}
+                />
+              </div>
+              <small className="construccion"> ****** Hasta ****** </small>
+              <div className="form form-group search-input construccion">
+                <input
+                  type="date"
+                  placeholder={`Filtre aca`}
+                  name="name"
+                  onChange={(e) => setSearchField2(e.target.value)}
+                />
+              </div>
+            </Fragment>
           )}
 
           <div className="profiles">
@@ -88,6 +123,7 @@ const Visitors = ({
 Visitors.propTypes = {
   getAllVisitors: PropTypes.func.isRequired,
   setSearchField: PropTypes.func.isRequired,
+  setSearchField2: PropTypes.func.isRequired,
   visitor: PropTypes.object.isRequired,
 };
 
@@ -95,6 +131,8 @@ const mapStateToProps = (state) => ({
   visitor: state.visitor,
 });
 
-export default connect(mapStateToProps, { getAllVisitors, setSearchField })(
-  Visitors
-);
+export default connect(mapStateToProps, {
+  getAllVisitors,
+  setSearchField,
+  setSearchField2,
+})(Visitors);
