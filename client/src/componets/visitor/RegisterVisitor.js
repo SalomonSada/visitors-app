@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createVisitor } from '../../actions/visitor';
+import { set } from 'lodash';
+import { check } from 'express-validator/src/middlewares/check';
 
 const RegisterVisitor = ({ createVisitor, history }) => {
   const [formData, createFormData] = useState({
@@ -11,6 +13,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     cellphone: '',
     direction: '',
     zip: '',
+    checkZip: false,
     birthday: '',
     amount: '',
     ages: '',
@@ -22,6 +25,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     cellphone,
     direction,
     zip,
+    checkZip,
     birthday,
     amount,
     ages,
@@ -29,6 +33,16 @@ const RegisterVisitor = ({ createVisitor, history }) => {
 
   const onChange = (e) => {
     createFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onChangeAndCheck = (e) => {
+    if (!isNaN(e.target.value)) {
+      return createFormData({ ...formData, zip: e.target.value });
+    }
+    createFormData({ ...formData, checkZip: true });
+    if (e.target.value === '') {
+      createFormData({ ...formData, checkZip: false });
+    }
   };
 
   const [displaySonOptions, toggleSonOptions] = useState(false);
@@ -53,9 +67,10 @@ const RegisterVisitor = ({ createVisitor, history }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Registra un Visitante</h1>
+      <h1 className="large text-primary">
+        <i className="fas fa-user m-1"></i>Registra un Visitante
+      </h1>
       <p className="lead">
-        <i className="fas fa-user m-1"></i>Agrega la siguiente información!{' '}
         <small>* = Campos Obligatorios</small>
       </p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -101,8 +116,14 @@ const RegisterVisitor = ({ createVisitor, history }) => {
             placeholder="* ZipCode, Ej: 32804"
             name="zip"
             value={zip}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => onChangeAndCheck(e, checkZip)}
           />
+          {checkZip && (
+            <div>
+              {' '}
+              <small>El campo ZipCode acepta solamente números.</small>
+            </div>
+          )}
         </div>
         <div className="form-group">
           <h4 className="left">Fecha de nacimiento</h4>

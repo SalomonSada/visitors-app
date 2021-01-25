@@ -95,7 +95,7 @@ const Visitors = ({
                   onChange={(e) => setSearchField(e.target.value)}
                 />
               </div>
-              <small className="construccion"> ****** Hasta ****** </small>
+              <small>Hasta</small>
               <div className="form form-group search-input construccion">
                 <input
                   type="date"
