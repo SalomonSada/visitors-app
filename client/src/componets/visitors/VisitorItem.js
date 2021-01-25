@@ -69,7 +69,7 @@ const VisitorItem = ({
             className="btn btn-success"
             onClick={() => {
               getVisitorById(_id);
-              setTimeout(() => setFormData({ ...formData, edit: true }), 500);
+              setTimeout(() => setFormData({ ...formData, edit: true }), 1000);
             }}
           >
             {formData.edit && <Redirect to={`/update_visitor/${_id}`} />}

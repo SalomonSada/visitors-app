@@ -7,6 +7,7 @@ import {
   setSearchField,
   setSearchField2,
 } from '../../actions/visitor';
+import { Redirect } from 'react-router-dom';
 import VisitorList from './VisitorList';
 
 const Visitors = ({
@@ -14,6 +15,7 @@ const Visitors = ({
   getAllVisitors,
   setSearchField,
   setSearchField2,
+  isAuthenticated,
 }) => {
   const [formData, setFormData] = useState({
     filterBy: 0,
@@ -41,10 +43,23 @@ const Visitors = ({
         let time = new Date(visitor.date).getTime();
         if (searchField === '' || searchFieldToDate === '') return visitors;
         return from < time && time <= to + 86400000; // + a day in miliseconds
+      case '4':
+        let today = new Date();
+        let day = String(today.getDate());
+        let month = String(today.getMonth() + 1);
+        let year = today.getFullYear();
+        if (month.length === 1) month = 0 + month;
+        if (day.length === 1) day = 0 + day;
+        today = year + '-' + month + '-' + day;
+        return visitor.date.toString().includes(today);
       default:
         return visitors;
     }
   });
+
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Fragment>
@@ -68,6 +83,7 @@ const Visitors = ({
               <option value={1}>Nombre</option>
               <option value={2}>ZipCode</option>
               <option value={3}>Fecha</option>
+              <option value={4}>Hoy</option>
             </select>
           </div>
 
@@ -82,7 +98,7 @@ const Visitors = ({
             </div>
           )}
 
-          {filterBy > 2 && (
+          {filterBy === '3' && (
             <Fragment>
               <small>Desde</small>
               <div className="form form-group search-input">
@@ -123,10 +139,12 @@ Visitors.propTypes = {
   setSearchField: PropTypes.func.isRequired,
   setSearchField2: PropTypes.func.isRequired,
   visitor: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   visitor: state.visitor,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
