@@ -3,8 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createVisitor } from '../../actions/visitor';
-import { set } from 'lodash';
-import { check } from 'express-validator/src/middlewares/check';
 
 const RegisterVisitor = ({ createVisitor, history }) => {
   const [formData, createFormData] = useState({

@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteVisitor } from '../../actions/visitor';
+import { deleteVisitor, getVisitorById } from '../../actions/visitor';
 
 const VisitorItem = ({
   name,
@@ -16,7 +16,12 @@ const VisitorItem = ({
   ages,
   _id,
   deleteVisitor,
+  getVisitorById,
 }) => {
+  const [formData, setFormData] = useState({
+    edit: false,
+  });
+
   return (
     <Fragment>
       <div className="profile bg-light">
@@ -60,9 +65,17 @@ const VisitorItem = ({
           </p>
         </div>
         <div className="my-t-1">
-          <Link to={`/update_visitor/${_id}`} className="btn btn-success ">
-            <i className="fas fa-user-edit"></i> Editar info
-          </Link>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              getVisitorById(_id);
+              setTimeout(() => setFormData({ ...formData, edit: true }), 500);
+            }}
+          >
+            {formData.edit && <Redirect to={`/update_visitor/${_id}`} />}
+            <i className="fas fa-user-edit"></i>Editar info
+          </button>
+
           <button className="btn btn-danger" onClick={() => deleteVisitor(_id)}>
             <i className="fas fa-trash-alt"></i> Eliminar
           </button>
@@ -75,6 +88,7 @@ const VisitorItem = ({
 VisitorItem.propTypes = {
   // visitor: PropTypes.object.isRequired,
   deleteVisitor: PropTypes.func.isRequired,
+  getVisitorById: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteVisitor })(VisitorItem);
+export default connect(null, { deleteVisitor, getVisitorById })(VisitorItem);

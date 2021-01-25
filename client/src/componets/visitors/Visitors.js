@@ -8,8 +8,6 @@ import {
   setSearchField2,
 } from '../../actions/visitor';
 import VisitorList from './VisitorList';
-//import { filter } from 'lodash';
-//import _ from 'lodash';
 
 const Visitors = ({
   visitor: { visitors, loading, searchField, searchFieldToDate },

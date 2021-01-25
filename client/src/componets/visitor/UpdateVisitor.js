@@ -37,7 +37,6 @@ const UpdateVisitor = ({
       amount: loading || !visitor.sons.amount ? '' : visitor.sons.amount,
       ages: loading || !visitor.sons.amount ? '' : visitor.sons.ages.join(),
     });
-
   }, [setFormData, loading, match.params._id]);
 
   const {
