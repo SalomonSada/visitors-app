@@ -14,13 +14,18 @@ const VisitorItem = ({
   birthday,
   amount,
   ages,
+  prayRequest,
+  otherChurch,
   _id,
   deleteVisitor,
   getVisitorById,
 }) => {
   const [formData, setFormData] = useState({
     edit: false,
+    pray: false,
   });
+
+  const { edit, pray } = formData;
 
   return (
     <Fragment>
@@ -63,7 +68,30 @@ const VisitorItem = ({
               </span>
             )}
           </p>
+          <p>
+            {otherChurch && (
+              <span>
+                <small className="textbold">Visita otra iglesia: </small>
+                <small>{otherChurch}</small>
+              </span>
+            )}
+          </p>
+          <p>
+            {prayRequest && (
+              <span>
+                <small
+                  className="textbold textbold2"
+                  onClick={() => setFormData({ ...formData, pray: !pray })}
+                >
+                  Ver petición de oración{' '}
+                </small>{' '}
+                <br />
+                {pray && <small>{prayRequest}</small>}
+              </span>
+            )}
+          </p>
         </div>
+
         <div className="my-t-1">
           <button
             className="btn btn-success"
@@ -72,7 +100,7 @@ const VisitorItem = ({
               setTimeout(() => setFormData({ ...formData, edit: true }), 1000);
             }}
           >
-            {formData.edit && <Redirect to={`/update_visitor/${_id}`} />}
+            {edit && <Redirect to={`/update_visitor/${_id}`} />}
             <i className="fas fa-user-edit"></i>Editar info
           </button>
 

@@ -15,6 +15,9 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     birthday: '',
     amount: '',
     ages: '',
+    prayRequest: '',
+    yes: false,
+    otherChurch: '',
   });
 
   const {
@@ -27,6 +30,9 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     birthday,
     amount,
     ages,
+    prayRequest,
+    yes,
+    otherChurch,
   } = formData;
 
   const onChange = (e) => {
@@ -43,7 +49,12 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     }
   };
 
-  const [displaySonOptions, toggleSonOptions] = useState(false);
+  const [displayOptions, toggleOptions] = useState({
+    sonsOptions: false,
+    otherChuchOption: false,
+  });
+
+  const { sonsOptions, otherChuchOption } = displayOptions;
 
   const clearFormData = () => {
     formData.name = '';
@@ -54,7 +65,9 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     formData.birthday = '';
     formData.amount = '0';
     formData.ages = '';
-    toggleSonOptions(false);
+    formData.prayRequest = '';
+    toggleOptions({ ...displayOptions, sonsOptions: false });
+    toggleOptions({ ...displayOptions, otherChuchOption: false });
   };
 
   const onSubmit = async (e) => {
@@ -114,7 +127,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
             placeholder="* ZipCode, Ej: 32804"
             name="zip"
             value={zip}
-            onChange={(e) => onChangeAndCheck(e, checkZip)}
+            onChange={(e) => onChangeAndCheck(e)}
           />
           {checkZip && (
             <div>
@@ -135,7 +148,9 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         {/*  */}
         <div className="my-1 left">
           <button
-            onClick={() => toggleSonOptions(!displaySonOptions)}
+            onClick={() =>
+              toggleOptions({ ...displayOptions, sonsOptions: !sonsOptions })
+            }
             type="button"
             className="btn btn-light textbold"
           >
@@ -144,7 +159,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
           <span></span>
         </div>
 
-        {displaySonOptions && (
+        {sonsOptions && (
           <Fragment>
             <div className="form-group">
               <select
@@ -178,6 +193,43 @@ const RegisterVisitor = ({ createVisitor, history }) => {
           </Fragment>
         )}
 
+        <div className="form-group">
+          ¿Asiste a otra Iglesia?
+          <input
+            type="checkbox"
+            className="m"
+            name="yes"
+            value={yes}
+            onClick={() =>
+              toggleOptions({
+                ...displayOptions,
+                otherChuchOption: !otherChuchOption,
+              })
+            }
+          />
+          {otherChuchOption && (
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Nombre de la Iglesia"
+                name="otherChurch"
+                value={otherChurch}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <textarea
+            type="text"
+            placeholder="Petición de Oración..."
+            name="prayRequest"
+            value={prayRequest}
+            onChange={(e) => onChange(e)}
+            rows="5"
+            cols="40"
+          />
+        </div>
         <input
           type="submit"
           className="btn btn-primary my-1"

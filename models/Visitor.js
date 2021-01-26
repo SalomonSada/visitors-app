@@ -38,9 +38,17 @@ const VisitorSchema = new mongoose.Schema({
       type: [Number],
     },
   },
+  prayRequest: {
+    type: String,
+    required: false,
+  },
+  otherChurch: {
+    type: String,
+    required: false,
+  },
   date: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 

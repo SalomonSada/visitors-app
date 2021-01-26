@@ -42,7 +42,7 @@ const Visitors = ({
         let to = new Date(searchFieldToDate).getTime();
         let time = new Date(visitor.date).getTime();
         if (searchField === '' || searchFieldToDate === '') return visitors;
-        return from < time && time <= to + 86400000; // + a day in miliseconds
+        return from < time && time <= to; // + a day in miliseconds
       case '4':
         let today = new Date();
         let day = String(today.getDate());
@@ -57,9 +57,9 @@ const Visitors = ({
     }
   });
 
-  if (!isAuthenticated) {
+  /* if (!isAuthenticated) {
     return <Redirect to="/" />;
-  }
+  } */
 
   return (
     <Fragment>

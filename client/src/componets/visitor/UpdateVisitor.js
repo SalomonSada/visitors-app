@@ -20,9 +20,17 @@ const UpdateVisitor = ({
     birthday: '',
     amount: '',
     ages: '',
+    prayRequest: '',
+    yes: false,
+    otherChurch: '',
   });
 
-  const [displaySonOptions, toggleSonOptions] = useState(true);
+  const [displayOptions, toggleOptions] = useState({
+    sonsOptions: true,
+    otherChuchOption: false,
+  });
+
+  const { sonsOptions, otherChuchOption } = displayOptions;
 
   useEffect(() => {
     getVisitorById(match.params._id);
@@ -36,6 +44,8 @@ const UpdateVisitor = ({
       birthday: loading || !visitor.birthday ? '' : visitor.birthday,
       amount: loading || !visitor.sons.amount ? '' : visitor.sons.amount,
       ages: loading || !visitor.sons.amount ? '' : visitor.sons.ages.join(),
+      prayRequest: loading || !visitor.prayRequest ? '' : visitor.prayRequest,
+      otherChurch: loading || !visitor.otherChurch ? '' : visitor.otherChurch,
     });
   }, [setFormData, loading, match.params._id]);
 
@@ -45,13 +55,27 @@ const UpdateVisitor = ({
     cellphone,
     direction,
     zip,
+    checkZip,
     birthday,
     amount,
     ages,
+    prayRequest,
+    yes,
+    otherChurch,
   } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onChangeAndCheck = (e) => {
+    if (!isNaN(e.target.value)) {
+      return setFormData({ ...formData, zip: e.target.value });
+    }
+    setFormData({ ...formData, checkZip: true });
+    if (e.target.value === '') {
+      setFormData({ ...formData, checkZip: false });
+    }
   };
 
   const onSubmit = async (e) => {
@@ -109,8 +133,14 @@ const UpdateVisitor = ({
             placeholder="* ZipCode, Ej: 32804"
             name="zip"
             value={zip}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => onChangeAndCheck(e)}
           />
+          {checkZip && (
+            <div>
+              {' '}
+              <small>El campo ZipCode acepta solamente números.</small>
+            </div>
+          )}
         </div>
         <div className="form-group">
           <h4 className="left">Fecha de nacimiento</h4>
@@ -124,7 +154,9 @@ const UpdateVisitor = ({
         {/*  */}
         <div className="my-1 left">
           <button
-            onClick={() => toggleSonOptions(!displaySonOptions)}
+            onClick={() =>
+              toggleOptions({ ...displayOptions, sonsOptions: !sonsOptions })
+            }
             type="button"
             className="btn btn-light textbold"
           >
@@ -133,7 +165,7 @@ const UpdateVisitor = ({
           <span></span>
         </div>
 
-        {displaySonOptions && (
+        {sonsOptions && (
           <Fragment>
             <div className="form-group">
               <select
@@ -167,6 +199,43 @@ const UpdateVisitor = ({
           </Fragment>
         )}
 
+        <div className="form-group">
+          ¿Asiste a otra Iglesia?
+          <input
+            type="checkbox"
+            className="m"
+            name="yes"
+            value={yes}
+            onClick={() =>
+              toggleOptions({
+                ...displayOptions,
+                otherChuchOption: !otherChuchOption,
+              })
+            }
+          />
+          {otherChuchOption && (
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Nombre de la Iglesia"
+                name="otherChurch"
+                value={otherChurch}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+          )}
+        </div>
+        <div className="form-group">
+          <textarea
+            type="text"
+            placeholder="Petición de Oración..."
+            name="prayRequest"
+            value={prayRequest}
+            onChange={(e) => onChange(e)}
+            rows="5"
+            cols="40"
+          />
+        </div>
         <input
           type="submit"
           className="btn btn-primary my-1"

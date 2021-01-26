@@ -17,6 +17,8 @@ const VisitorList = ({ visitorL }) => {
             birthday={visitorL[i].birthday}
             amount={visitorL[i].sons.amount}
             ages={visitorL[i].sons.ages}
+            prayRequest={visitorL[i].prayRequest}
+            otherChurch={visitorL[i].otherChurch}
             _id={visitorL[i]._id}
           />
         );

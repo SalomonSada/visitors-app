@@ -35,6 +35,8 @@ router.post(
       amount,
       ages,
       _id,
+      prayRequest,
+      otherChurch, 
     } = req.body;
 
     // visitor object
@@ -46,6 +48,8 @@ router.post(
     if (direction) visitorFields.direction = direction;
     if (zip) visitorFields.zip = zip;
     if (birthday) visitorFields.birthday = birthday;
+    if (prayRequest) visitorFields.prayRequest = prayRequest;
+    if (otherChurch) visitorFields.otherChurch = otherChurch;
 
     // sons object
     visitorFields.sons = {};
@@ -54,9 +58,6 @@ router.post(
       visitorFields.sons.ages = ages.split(',').map((skill) => skill.trim());
 
     try {
-      //let visitor = await Visitor.findOne({ _id });
-      //console.log(req.user.id
-
       // Update
       let visitor = await Visitor.findOneAndUpdate(
         { _id },

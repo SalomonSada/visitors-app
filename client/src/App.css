@@ -362,6 +362,10 @@ button {
   font-weight: bolder;
 }
 
+.textbold2:hover {
+  cursor: pointer;
+}
+
 .construccion {
   text-decoration: line-through;
   color: #dc3545;
