@@ -32,7 +32,9 @@ const VisitorItem = ({
       <div className="profile bg-light">
         <div>
           <h2>{name}</h2>
-          <p>{email}</p>
+          <p>
+            <small className="textbold">Email: </small> {email}
+          </p>
           <p>
             <small className="textbold">Teléfono: </small>
             {cellphone}
@@ -41,11 +43,7 @@ const VisitorItem = ({
             <small className="textbold">ZipCode: </small> {zip}
           </p>
           <p>
-            {direction && (
-              <span>
-                <small className="textbold">Dirección: </small> {direction}
-              </span>
-            )}
+            <small className="textbold">Dirección: </small> {direction}
           </p>
           <p>
             {birthday && (

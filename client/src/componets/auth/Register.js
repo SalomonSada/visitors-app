@@ -15,14 +15,23 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   const { name, email, password, password2 } = formData;
 
+  const clearFormData = () => {
+    name = '';
+    email = '';
+    password = '';
+    password2 = '';
+  };
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) setAlert('passwords do not match', 'danger');
+    if (password !== password2)
+      setAlert('Las contraseñas no coinciden', 'danger');
     else {
       register({ name, email, password });
+      setAlert('Usuario registrado', 'success');
     }
   };
 
@@ -84,12 +93,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           className="btn btn-primary btn-altern"
         />
       </form>
-      <p className="my-1">
-        ¿Ya tienes una cuenta?{' '}
-        <Link to="/login" className="redirect">
-          Iniciar Sesión
-        </Link>
-      </p>
     </Fragment>
   );
 };

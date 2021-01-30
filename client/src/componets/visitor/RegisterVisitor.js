@@ -81,14 +81,11 @@ const RegisterVisitor = ({ createVisitor, history }) => {
       <h1 className="large text-primary">
         <i className="fas fa-user m-1"></i>Registra un Visitante
       </h1>
-      <p className="lead">
-        <small>* = Campos Obligatorios</small>
-      </p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
-            placeholder="* Nombre"
+            placeholder="Nombre"
             name="name"
             value={name}
             onChange={(e) => onChange(e)}
@@ -97,7 +94,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="email"
-            placeholder="* Correo Electrónico"
+            placeholder="Correo Electrónico"
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
@@ -106,7 +103,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="* Número de teléfono"
+            placeholder="Número de teléfono"
             name="cellphone"
             value={cellphone}
             onChange={(e) => onChange(e)}
@@ -124,7 +121,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="* ZipCode, Ej: 32804"
+            placeholder="ZipCode, Ej: 32804"
             name="zip"
             value={zip}
             onChange={(e) => onChangeAndCheck(e)}

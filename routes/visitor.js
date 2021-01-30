@@ -10,15 +10,7 @@ const Visitor = require('../models/Visitor');
 // @access  Private
 router.post(
   '/',
-  [
-    auth,
-    [
-      check('name', 'Name is required').not().isEmpty(),
-      check('email', 'Please include a valid email').isEmail(),
-      check('cellphone', 'Cellphone is required').not().isEmpty(),
-      check('zip', 'Zipcode is required').not().isEmpty(),
-    ],
-  ],
+  [auth, [check('name', 'El campo nombre es obligatorio').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -36,7 +28,7 @@ router.post(
       ages,
       _id,
       prayRequest,
-      otherChurch, 
+      otherChurch,
     } = req.body;
 
     // visitor object
