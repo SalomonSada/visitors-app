@@ -143,7 +143,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
           />
         </div>
         {/*  */}
-        <div className="my-1 left">
+        <div className="my-1">
           <button
             onClick={() =>
               toggleOptions({ ...displayOptions, sonsOptions: !sonsOptions })

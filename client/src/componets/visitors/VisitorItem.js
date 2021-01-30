@@ -99,11 +99,13 @@ const VisitorItem = ({
             }}
           >
             {edit && <Redirect to={`/update_visitor/${_id}`} />}
-            <i className="fas fa-user-edit"></i>Editar info
+            <i className="fas fa-user-edit"></i>
+            <span className="hide-sm">Editar info</span>
           </button>
 
           <button className="btn btn-danger" onClick={() => deleteVisitor(_id)}>
-            <i className="fas fa-trash-alt"></i> Eliminar
+            <i className="fas fa-trash-alt"></i>
+            <span className="hide-sm">Eliminar</span>
           </button>
         </div>
       </div>
