@@ -13,7 +13,9 @@ const VisitorList = ({ visitorL }) => {
             cellphone={visitorL[i].cellphone}
             direction={visitorL[i].direction}
             zip={visitorL[i].zip}
-            date={visitorL[i].date}
+            date={visitorL[i].date.toLocaleString('en-Us', {
+              timeZone: 'America/Caracas',
+            })}
             birthday={visitorL[i].birthday}
             amount={visitorL[i].sons.amount}
             ages={visitorL[i].sons.ages}

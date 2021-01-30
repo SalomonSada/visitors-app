@@ -7,7 +7,6 @@ import {
   setSearchField,
   setSearchField2,
 } from '../../actions/visitor';
-import { Redirect } from 'react-router-dom';
 import VisitorList from './VisitorList';
 
 const Visitors = ({
@@ -56,10 +55,6 @@ const Visitors = ({
         return visitors;
     }
   });
-
-  /* if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  } */
 
   return (
     <Fragment>
