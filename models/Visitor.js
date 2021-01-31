@@ -14,6 +14,7 @@ const VisitorSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: false,
+    required: false,
   },
   cellphone: {
     type: String,

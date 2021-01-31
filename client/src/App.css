@@ -371,6 +371,10 @@ button {
   color: #dc3545;
 }
 
+.repairingBugText {
+  color: #dc3545;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .left {
