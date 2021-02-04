@@ -34,9 +34,8 @@ const Visitors = ({
     switch (filterBy) {
       case '1':
         return visitor.name.toLowerCase().includes(searchField.toLowerCase());
-      case '2':
-        return visitor.zip; /* .toString() 
-          .includes(searchField);*/
+      case '2': //zip
+        if (visitor.zip) return visitor.zip.toString().includes(searchField);
       case '3':
         let from = new Date(searchField).getTime(); // miliseconds from 1970 to the date in  searchFiled
         let to = new Date(searchFieldToDate).getTime();
@@ -84,7 +83,7 @@ const Visitors = ({
           </div>
 
           {filterBy > 0 &&
-            filterBy < 2 && ( // debe ir hasta 3, despues de arreglar zipcode
+            filterBy <= 2 && ( // debe ir hasta 3, despues de arreglar zipcode
               <div className="form form-group search-input">
                 <input
                   type="text"
@@ -94,20 +93,6 @@ const Visitors = ({
                 />
               </div>
             )}
-
-          {
-            /* repairing zipcode alert */
-            filterBy == 2 && (
-              <div className="form form-group search-input repairingBugText">
-                <input
-                  type="text"
-                  placeholder={`Temporalmente deshabilitado`}
-                  zip="zip"
-                  onChange={(e) => setSearchField(e.target.value)}
-                />
-              </div>
-            )
-          }
 
           {filterBy === '3' && (
             <Fragment>
