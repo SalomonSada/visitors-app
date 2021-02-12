@@ -64,6 +64,8 @@ const UpdateVisitor = ({
     otherChurch,
   } = formData;
 
+ // if (amount === '') return sonsOptions === false;
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -164,7 +166,6 @@ const UpdateVisitor = ({
           </button>
           <span></span>
         </div>
-
         {sonsOptions && (
           <Fragment>
             <div className="form-group">
