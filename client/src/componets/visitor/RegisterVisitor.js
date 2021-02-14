@@ -74,6 +74,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     e.preventDefault();
     createVisitor(formData, history);
     clearFormData();
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -225,6 +226,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
             onChange={(e) => onChange(e)}
             rows="5"
             cols="40"
+            className="peticion"
           />
         </div>
         <input

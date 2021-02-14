@@ -375,6 +375,10 @@ button {
   color: #dc3545;
 }
 
+.peticion {
+  font-family: 'Raleway', sans-serif;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .left {

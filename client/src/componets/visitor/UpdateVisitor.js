@@ -26,7 +26,7 @@ const UpdateVisitor = ({
   });
 
   const [displayOptions, toggleOptions] = useState({
-    sonsOptions: true,
+    sonsOptions: false,
     otherChuchOption: false,
   });
 
@@ -41,13 +41,17 @@ const UpdateVisitor = ({
       cellphone: loading || !visitor.cellphone ? '' : visitor.cellphone,
       direction: loading || !visitor.direction ? '' : visitor.direction,
       zip: loading || !visitor.zip ? '' : visitor.zip,
-      birthday: loading || !visitor.birthday ? '' : visitor.birthday,
+      birthday:
+        loading || !visitor.birthday ? '' : visitor.birthday.slice(0, 10),
       amount: loading || !visitor.sons.amount ? '' : visitor.sons.amount,
       ages: loading || !visitor.sons.amount ? '' : visitor.sons.ages.join(),
       prayRequest: loading || !visitor.prayRequest ? '' : visitor.prayRequest,
       otherChurch: loading || !visitor.otherChurch ? '' : visitor.otherChurch,
     });
-  }, [setFormData, loading, match.params._id]);
+    toggleOptions({
+      sonsOptions: loading || !visitor.sons.amount ? false : true,
+    });
+  }, [setFormData, loading, match.params._id, toggleOptions]);
 
   const {
     name,
@@ -63,8 +67,6 @@ const UpdateVisitor = ({
     yes,
     otherChurch,
   } = formData;
-
- // if (amount === '') return sonsOptions === false;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -83,6 +85,7 @@ const UpdateVisitor = ({
   const onSubmit = async (e) => {
     e.preventDefault();
     createVisitor({ ...formData, _id: match.params._id }, history, true);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -235,6 +238,7 @@ const UpdateVisitor = ({
             onChange={(e) => onChange(e)}
             rows="5"
             cols="40"
+            className="peticion"
           />
         </div>
         <input

@@ -49,11 +49,7 @@ const VisitorSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: new Date(),
-
-    /* .toLocaleString('en-US', {
-      timeZone: 'America/New_York',
-    }), */ //UTC -5 necesita, actualmente esta en UTC 0
+    default: Date.now() - 18000000, // Equivalente a 5 hs
   },
 });
 
