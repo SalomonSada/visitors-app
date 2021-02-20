@@ -14,7 +14,7 @@ const Visitors = ({
   getAllVisitors,
   setSearchField,
   setSearchField2,
-  isAuthenticated,
+  auth,
 }) => {
   const [formData, setFormData] = useState({
     filterBy: 0,
@@ -29,6 +29,25 @@ const Visitors = ({
   useEffect(() => {
     getAllVisitors();
   }, [getAllVisitors]);
+
+  function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+  }
+
+  const userToken = parseJwt(localStorage.token);
+
+  // console.log(userToken.user.rol);
 
   const filteredVisitor = visitors.filter((visitor) => {
     switch (filterBy) {
@@ -119,7 +138,10 @@ const Visitors = ({
 
           <div className="profiles">
             {visitors.length > 0 ? (
-              <VisitorList visitorL={filteredVisitor} />
+              <VisitorList
+                visitorL={filteredVisitor}
+                rol={userToken.user.rol}
+              />
             ) : (
               <Spinner />
             )}
@@ -135,12 +157,12 @@ Visitors.propTypes = {
   setSearchField: PropTypes.func.isRequired,
   setSearchField2: PropTypes.func.isRequired,
   visitor: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   visitor: state.visitor,
-  isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
@@ -11,15 +11,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     email: '',
     password: '',
     password2: '',
+    rol: '',
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2, rol } = formData;
 
   const clearFormData = () => {
     name = '';
     email = '';
     password = '';
     password2 = '';
+    rol = '';
   };
 
   const onChange = (e) =>
@@ -29,14 +31,35 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     e.preventDefault();
     if (password !== password2)
       setAlert('Las contraseñas no coinciden', 'danger');
+    if (rol === '' || rol === '0')
+      setAlert('Establezca el rol de usuario', 'danger');
     else {
-      register({ name, email, password });
+      register({ name, email, password, rol });
       setAlert('Usuario registrado', 'success');
     }
+    window.scrollTo(0, 0);
   };
 
-  // Redirect if Logged in
-  if (!isAuthenticated) {
+  // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
+  const parseJwt = (token) => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+  };
+
+  const userToken = parseJwt(localStorage.token);
+
+  // Redirect if doesn't have aproppiated rol
+  if (userToken.user.rol !== 'Admin') {
     return <Redirect to="/" />;
   }
 
@@ -66,6 +89,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={(e) => onChange(e)}
             required
           />
+        </div>
+        <div className="form-group">
+          <select name="rol" value={rol} onChange={(e) => onChange(e)}>
+            <option value="0">Seleccione Rol de usuario</option>
+            <option value="Admin">Admin</option>
+            <option value="Ujier">Ujier</option>
+          </select>
         </div>
         <div className="form-group">
           <input

@@ -5,14 +5,36 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
+  const parseJwt = (token) => {
+    if (localStorage.token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+
+      return JSON.parse(jsonPayload);
+    } else return { user: { rol: 'no hay token' } };
+  };
+
+  const userToken = parseJwt(localStorage.token);
+
   const authLinks = (
     <ul>
-      <li>
-        <Link to="/register">
-          <i className="fas fa-address-card"></i>{' '}
-          <span className="hide-sm">Registrar Usuario</span>
-        </Link>
-      </li>
+      {userToken.user.rol === 'Admin' && (
+        <li>
+          <Link to="/register">
+            <i className="fas fa-address-card"></i>{' '}
+            <span className="hide-sm">Registrar Usuario</span>
+          </Link>
+        </li>
+      )}
       <li>
         <Link to="/register_visitor">
           <i className="fas fa-user"></i>{' '}

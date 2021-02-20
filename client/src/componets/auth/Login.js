@@ -52,7 +52,11 @@ const Login = ({ login, isAuthenticated }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type="submit" value="Iniciar Sesión" className="btn btn-primary" />
+        <input
+          type="submit"
+          value="Iniciar Sesión"
+          className="btn btn-primary"
+        />
       </form>
       <p className="my-1">
         ¿No tienes una cuenta?{' '}

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import VisitorItem from './VisitorItem';
 
-const VisitorList = ({ visitorL }) => {
+const VisitorList = ({ visitorL, rol }) => {
   return (
     <Fragment>
       {visitorL.map((visitor, i) => {
@@ -22,6 +22,7 @@ const VisitorList = ({ visitorL }) => {
             prayRequest={visitorL[i].prayRequest}
             otherChurch={visitorL[i].otherChurch}
             _id={visitorL[i]._id}
+            rol={rol}
           />
         );
       })}

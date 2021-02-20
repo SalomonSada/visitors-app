@@ -19,6 +19,7 @@ const VisitorItem = ({
   _id,
   deleteVisitor,
   getVisitorById,
+  rol,
 }) => {
   const [formData, setFormData] = useState({
     edit: false,
@@ -89,25 +90,32 @@ const VisitorItem = ({
             )}
           </p>
         </div>
+        {rol === 'Admin' && (
+          <div className="my-t-1">
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                getVisitorById(_id);
+                setTimeout(
+                  () => setFormData({ ...formData, edit: true }),
+                  1000
+                );
+              }}
+            >
+              {edit && <Redirect to={`/update_visitor/${_id}`} />}
+              <i className="fas fa-user-edit"></i>
+              <span className="hide-sm">Editar info</span>
+            </button>
 
-        <div className="my-t-1">
-          <button
-            className="btn btn-success"
-            onClick={() => {
-              getVisitorById(_id);
-              setTimeout(() => setFormData({ ...formData, edit: true }), 1000);
-            }}
-          >
-            {edit && <Redirect to={`/update_visitor/${_id}`} />}
-            <i className="fas fa-user-edit"></i>
-            <span className="hide-sm">Editar info</span>
-          </button>
-
-          <button className="btn btn-danger" onClick={() => deleteVisitor(_id)}>
-            <i className="fas fa-trash-alt"></i>
-            <span className="hide-sm">Eliminar</span>
-          </button>
-        </div>
+            <button
+              className="btn btn-danger"
+              onClick={() => deleteVisitor(_id)}
+            >
+              <i className="fas fa-trash-alt"></i>
+              <span className="hide-sm">Eliminar</span>
+            </button>
+          </div>
+        )}
       </div>
     </Fragment>
   );

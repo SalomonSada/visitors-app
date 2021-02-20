@@ -32,9 +32,11 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user:
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = ({ name, email, password, rol }) => async (
+  dispatch
+) => {
   try {
-    const res = await axios.post('/api/user', { name, email, password });
+    const res = await axios.post('/api/user', { name, email, password, rol });
 
     dispatch({
       type: REGISTER_SUCCESS,
