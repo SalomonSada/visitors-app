@@ -11,6 +11,7 @@
     "express-validator": "^6.9.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.9",
+    "react-html-table-to-excel": "^2.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

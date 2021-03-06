@@ -36,7 +36,7 @@ img {
 
 /* Utilities */
 .container {
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
@@ -99,6 +99,14 @@ img {
 }
 .py-3 {
   padding: 3rem 0;
+}
+
+.p-x {
+  padding: 0 2rem;
+}
+
+.m-x {
+  margin: 0 2rem;
 }
 
 /* Margin */
@@ -257,7 +265,7 @@ img {
 .form select,
 .form textarea {
   /*  display: block; */
-  width: 50%;
+  width: 40%;
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
@@ -321,7 +329,7 @@ button {
 .profiles {
   display: inline-block;
   justify-content: center;
-  width: 50%;
+  width: 40%;
 }
 
 /* Profiles Page */
@@ -379,6 +387,21 @@ button {
   font-family: 'Raleway', sans-serif;
 }
 
+.pointerCursor {
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+.partialTable {
+  margin-left: 5rem;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .left {
@@ -403,9 +426,6 @@ button {
     padding: 0.4rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
-  }
-  .container {
-    margin-top: 8rem;
   }
 
   .hide-sm {

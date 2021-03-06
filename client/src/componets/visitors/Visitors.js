@@ -8,6 +8,7 @@ import {
   setSearchField2,
 } from '../../actions/visitor';
 import VisitorList from './VisitorList';
+import VisitorPartialTable from './VisitorPartialTable';
 
 const Visitors = ({
   visitor: { visitors, loading, searchField, searchFieldToDate },
@@ -19,6 +20,11 @@ const Visitors = ({
   const [formData, setFormData] = useState({
     filterBy: 0,
   });
+
+  const [displayOptions, toggleOptions] = useState({
+    celular: false,
+  });
+  const { celular } = displayOptions;
 
   const { filterBy } = formData;
 
@@ -86,6 +92,16 @@ const Visitors = ({
             <i className="fas fa-search"></i> Busca los visitantes ya
             registrados
           </p>
+          <button
+            onClick={() =>
+              toggleOptions({ ...displayOptions, celular: !celular })
+            }
+            type="button"
+            className="btn btn-light textbold m"
+          >
+            Ver
+            {!celular ? ' visualización por tabla' : ' visualización agrupada'}
+          </button>
 
           <div className="form form-group">
             <select
@@ -135,17 +151,29 @@ const Visitors = ({
               </div>
             </Fragment>
           )}
-
-          <div className="profiles">
-            {visitors.length > 0 ? (
-              <VisitorList
-                visitorL={filteredVisitor}
-                rol={userToken.user.rol}
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
+          {!celular ? (
+            <div className="profiles">
+              {visitors.length > 0 ? (
+                <VisitorList
+                  visitorL={filteredVisitor}
+                  rol={userToken.user.rol}
+                />
+              ) : (
+                <Spinner />
+              )}
+            </div>
+          ) : (
+            <div>
+              {visitors.length > 0 ? (
+                <VisitorPartialTable
+                  visitorL={filteredVisitor}
+                  rol={userToken.user.rol}
+                />
+              ) : (
+                <Spinner />
+              )}
+            </div>
+          )}
         </Fragment>
       )}
     </Fragment>
