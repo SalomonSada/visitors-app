@@ -4,25 +4,31 @@
   "description": "visitor-app",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
-    "config": "^3.3.3",
-    "express": "^4.17.1",
-    "express-validator": "^6.9.0",
+    "config": "^3.3.11",
+    "express": "^4.19.2",
+    "express-validator": "^6.15.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.9",
+    "mongoose": "^5.13.22",
+    "react": "^18.2.0",
+    "react-html-table-to-excel": "^2.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.22"
   },
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+<<<<<<< HEAD
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+=======
+    "build": "npm install && nmp install --prefix client && npm run build --prefix client"
+>>>>>>> master
   },
   "repository": {
     "type": "git",

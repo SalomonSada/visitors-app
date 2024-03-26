@@ -32,28 +32,30 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user:
-export const register = ({ name, email, password }) => async (dispatch) => {
-  try {
-    const res = await axios.post('/api/user', { name, email, password });
+export const register =
+  ({ name, email, password, rol }) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.post('/api/user', { name, email, password, rol });
 
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: res.data,
-    });
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
 
-    dispatch(loadUser());
-  } catch (err) {
-    const errors = err.response.data.errors;
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: REGISTER_FAIL,
+      });
     }
-
-    dispatch({
-      type: REGISTER_FAIL,
-    });
-  }
-};
+  };
 
 // Login user:
 export const login = (email, password) => async (dispatch) => {
@@ -81,6 +83,5 @@ export const login = (email, password) => async (dispatch) => {
 
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
-  // dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

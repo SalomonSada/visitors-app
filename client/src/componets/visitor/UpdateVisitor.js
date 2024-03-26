@@ -1,17 +1,22 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createVisitor } from '../../actions/visitor';
+import { createVisitor, getVisitorById } from '../../actions/visitor';
 
-const RegisterVisitor = ({ createVisitor, history }) => {
-  const [formData, createFormData] = useState({
+const UpdateVisitor = ({
+  visitor: { visitor, loading },
+  createVisitor,
+  history,
+  getVisitorById,
+  match,
+}) => {
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     cellphone: '',
     direction: '',
-    zip: '',
-    checkZip: false,
+    zip: 0,
     birthday: '',
     amount: '',
     ages: '',
@@ -19,6 +24,34 @@ const RegisterVisitor = ({ createVisitor, history }) => {
     yes: false,
     otherChurch: '',
   });
+
+  const [displayOptions, toggleOptions] = useState({
+    sonsOptions: false,
+    otherChuchOption: false,
+  });
+
+  const { sonsOptions, otherChuchOption } = displayOptions;
+
+  useEffect(() => {
+    getVisitorById(match.params._id);
+
+    setFormData({
+      name: loading || !visitor.name ? '' : visitor.name,
+      email: loading || !visitor.email ? '' : visitor.email,
+      cellphone: loading || !visitor.cellphone ? '' : visitor.cellphone,
+      direction: loading || !visitor.direction ? '' : visitor.direction,
+      zip: loading || !visitor.zip ? '' : visitor.zip,
+      birthday:
+        loading || !visitor.birthday ? '' : visitor.birthday.slice(0, 10),
+      amount: loading || !visitor.sons.amount ? '' : visitor.sons.amount,
+      ages: loading || !visitor.sons.amount ? '' : visitor.sons.ages.join(),
+      prayRequest: loading || !visitor.prayRequest ? '' : visitor.prayRequest,
+      otherChurch: loading || !visitor.otherChurch ? '' : visitor.otherChurch,
+    });
+    toggleOptions({
+      sonsOptions: loading || !visitor.sons.amount ? false : true,
+    });
+  }, [setFormData, loading, match.params._id, toggleOptions]);
 
   const {
     name,
@@ -36,57 +69,37 @@ const RegisterVisitor = ({ createVisitor, history }) => {
   } = formData;
 
   const onChange = (e) => {
-    createFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const onChangeAndCheck = (e) => {
     if (!isNaN(e.target.value)) {
-      return createFormData({ ...formData, zip: e.target.value });
+      return setFormData({ ...formData, zip: e.target.value });
     }
-    createFormData({ ...formData, checkZip: true });
+    setFormData({ ...formData, checkZip: true });
     if (e.target.value === '') {
-      createFormData({ ...formData, checkZip: false });
+      setFormData({ ...formData, checkZip: false });
     }
-  };
-
-  const [displayOptions, toggleOptions] = useState({
-    sonsOptions: false,
-    otherChuchOption: false,
-  });
-
-  const { sonsOptions, otherChuchOption } = displayOptions;
-
-  const clearFormData = () => {
-    formData.name = '';
-    formData.email = '';
-    formData.cellphone = '';
-    formData.direction = '';
-    formData.zip = '';
-    formData.birthday = '';
-    formData.amount = '0';
-    formData.ages = '';
-    formData.prayRequest = '';
-    toggleOptions({ ...displayOptions, sonsOptions: false });
-    toggleOptions({ ...displayOptions, otherChuchOption: false });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createVisitor(formData, history);
-    clearFormData();
+    createVisitor({ ...formData, _id: match.params._id }, history, true);
     window.scrollTo(0, 0);
   };
 
   return (
     <Fragment>
-      <h1 className="large text-primary">
-        <i className="fas fa-user m-1"></i>Registra un Visitante
-      </h1>
+      <h1 className="large text-primary">Actualiza un Visitante</h1>
+      <p className="lead">
+        <i className="fas fa-user m-1"></i>Agrega la siguiente información!{' '}
+        <small>* = Campos Obligatorios</small>
+      </p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Nombre"
+            placeholder="* Nombre"
             name="name"
             value={name}
             onChange={(e) => onChange(e)}
@@ -95,7 +108,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="email"
-            placeholder="Correo Electrónico"
+            placeholder="* Correo Electrónico"
             name="email"
             value={email}
             onChange={(e) => onChange(e)}
@@ -104,7 +117,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Número de teléfono"
+            placeholder="* Número de teléfono"
             name="cellphone"
             value={cellphone}
             onChange={(e) => onChange(e)}
@@ -113,7 +126,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Direction"
+            placeholder="Direccion"
             name="direction"
             value={direction}
             onChange={(e) => onChange(e)}
@@ -122,7 +135,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="ZipCode, Ej: 32804"
+            placeholder="* ZipCode, Ej: 32804"
             name="zip"
             value={zip}
             onChange={(e) => onChangeAndCheck(e)}
@@ -144,7 +157,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
           />
         </div>
         {/*  */}
-        <div className="my-1">
+        <div className="my-1 left">
           <button
             onClick={() =>
               toggleOptions({ ...displayOptions, sonsOptions: !sonsOptions })
@@ -156,7 +169,6 @@ const RegisterVisitor = ({ createVisitor, history }) => {
           </button>
           <span></span>
         </div>
-
         {sonsOptions && (
           <Fragment>
             <div className="form-group">
@@ -232,7 +244,7 @@ const RegisterVisitor = ({ createVisitor, history }) => {
         <input
           type="submit"
           className="btn btn-primary my-1"
-          value="Registrar"
+          value="Actualizar   "
         />
         <Link className="btn btn-light my-1 textbold" to="/visitors">
           Ver Visitantes
@@ -242,8 +254,16 @@ const RegisterVisitor = ({ createVisitor, history }) => {
   );
 };
 
-RegisterVisitor.propTypes = {
+UpdateVisitor.propTypes = {
   createVisitor: PropTypes.func.isRequired,
+  getVisitorById: PropTypes.func.isRequired,
+  visitor: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createVisitor })(withRouter(RegisterVisitor));
+const mapStateToProps = (state) => ({
+  visitor: state.visitor,
+});
+
+export default connect(mapStateToProps, { createVisitor, getVisitorById })(
+  withRouter(UpdateVisitor)
+);

@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-  --primary-color: #5a5353;
+  --primary-color: #53555a;
   --dark-color: #270900;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -36,7 +36,7 @@ img {
 
 /* Utilities */
 .container {
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
@@ -101,6 +101,14 @@ img {
   padding: 3rem 0;
 }
 
+.p-x {
+  padding: 0 2rem;
+}
+
+.m-x {
+  margin: 0 2rem;
+}
+
 /* Margin */
 .m {
   margin: 0.5rem;
@@ -125,6 +133,10 @@ img {
 }
 .my-3 {
   margin: 3rem 0;
+}
+
+.my-t-1 {
+  margin-top: 1.5rem;
 }
 
 .btn {
@@ -253,7 +265,7 @@ img {
 .form select,
 .form textarea {
   /*  display: block; */
-  width: 50%;
+  width: 40%;
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
@@ -317,7 +329,7 @@ button {
 .profiles {
   display: inline-block;
   justify-content: center;
-  width: 50%;
+  width: 40%;
 }
 
 /* Profiles Page */
@@ -353,8 +365,50 @@ button {
 .search-input {
   margin-bottom: 1rem;
 }
+
+.textbold {
+  font-weight: bolder;
+}
+
+.textbold2:hover {
+  cursor: pointer;
+}
+
+.construccion {
+  text-decoration: line-through;
+  color: #dc3545;
+}
+
+.repairingBugText {
+  color: #dc3545;
+}
+
+.peticion {
+  font-family: 'Raleway', sans-serif;
+}
+
+.pointerCursor {
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+.partialTable {
+  margin-left: 5rem;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
+  .left {
+    text-align: left;
+    justify-content: left;
+  }
+
   .profiles {
     display: inline-block;
     justify-content: center;
@@ -372,9 +426,6 @@ button {
     padding: 0.4rem;
     font-size: 1.2rem;
     border: 1px solid #ccc;
-  }
-  .container {
-    margin-top: 8rem;
   }
 
   .hide-sm {

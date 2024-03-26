@@ -10,44 +10,56 @@ const Visitor = require('../models/Visitor');
 // @access  Private
 router.post(
   '/',
-  [
-    auth,
-    [
-      check('name', 'Name is required').not().isEmpty(),
-      check('email', 'Please include a valid email').isEmail(),
-      check('cellphone', 'Cellphone is required').not().isEmpty(),
-      check('direction', 'Direction is required').not().isEmpty(),
-    ],
-  ],
+  [auth, [check('name', 'El campo nombre es obligatorio').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, cellphone, direction } = req.body;
+    const {
+      name,
+      email,
+      cellphone,
+      direction,
+      zip,
+      birthday,
+      amount,
+      ages,
+      _id,
+      prayRequest,
+      otherChurch,
+    } = req.body;
 
+    // visitor object
     const visitorFields = {};
     visitorFields.user = req.user.id;
     if (name) visitorFields.name = name;
     if (email) visitorFields.email = email;
     if (cellphone) visitorFields.cellphone = cellphone;
     if (direction) visitorFields.direction = direction;
+    if (zip) visitorFields.zip = zip;
+    if (birthday) visitorFields.birthday = birthday;
+    if (prayRequest) visitorFields.prayRequest = prayRequest;
+    if (otherChurch) visitorFields.otherChurch = otherChurch;
+
+    // sons object
+    visitorFields.sons = {};
+    if (amount) visitorFields.sons.amount = amount;
+    if (ages)
+      visitorFields.sons.ages = ages.split(',').map((skill) => skill.trim());
 
     try {
-      // check if the visitor exist
-      let checkVisitor = await Visitor.findOne({ email });
-      if (checkVisitor) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Visitor already exists' }] });
+      // Update
+      let visitor = await Visitor.findOneAndUpdate(
+        { _id },
+        { $set: visitorFields },
+        { new: true }
+      );
+      if (!visitor) {
+        visitor = new Visitor(visitorFields);
+        await visitor.save();
       }
-
-      let visitor = await Visitor.findOne({ user: req.user.id });
-
-      visitor = new Visitor(visitorFields);
-
-      await visitor.save();
 
       res.json(visitor);
     } catch (err) {

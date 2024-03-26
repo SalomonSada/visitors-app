@@ -8,7 +8,8 @@ import Alert from './componets/layout/Alert';
 import Login from './componets/auth/Login';
 import Register from './componets/auth/Register';
 import RegisterVisitor from './componets/visitor/RegisterVisitor';
-import Visitors from './componets/visitor/Visitors';
+import UpdateVisitor from './componets/visitor/UpdateVisitor';
+import Visitors from './componets/visitors/Visitors';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -34,14 +35,29 @@ const App = () => {
           <section className="container">
             <Alert />
             <Switch>
+<<<<<<< HEAD
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <PrivateRoute
+=======
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/" component={Login} />
+              <Route
+>>>>>>> master
                 exact
                 path="/register_visitor"
                 component={RegisterVisitor}
               />
+<<<<<<< HEAD
               <PrivateRoute exact path="/visitors" component={Visitors} />
+=======
+              <Route
+                exact
+                path="/update_visitor/:_id"
+                component={UpdateVisitor}
+              />
+              <Route exact path="/visitors" component={Visitors} />
+>>>>>>> master
             </Switch>
           </section>
         </Fragment>

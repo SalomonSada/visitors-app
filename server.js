@@ -1,6 +1,10 @@
 const express = require('express');
 const connectDB = require('./config/db');
+<<<<<<< HEAD
 const pathh = require('path');
+=======
+const path = require('path');
+>>>>>>> master
 
 const app = express();
 
@@ -15,9 +19,15 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/visitor', require('./routes/visitor'));
 
+<<<<<<< HEAD
 // serve static assets on production
 if (process.env.NODE_ENV === 'production') {
   // set static folder
+=======
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  //set static folder
+>>>>>>> master
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
@@ -28,3 +38,5 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server Started on port ${PORT}`));
+
+//"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"

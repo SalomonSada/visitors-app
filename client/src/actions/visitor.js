@@ -6,10 +6,15 @@ import {
   GET_VISITOR,
   GET_VISITORS,
   VISITOR_ERROR,
+<<<<<<< HEAD
   //CHANGE_SEARCH_FIELD,
+=======
+  CHANGE_SEARCH_FIELD,
+  CHANGE_SEARCH_FIELD2,
+>>>>>>> master
 } from './types';
 
-// Get current users profile
+// Get current visitor
 export const getCurrentVisitor = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/visitor/me');
@@ -62,8 +67,10 @@ export const getVisitorById = (visitorId) => async (dispatch) => {
   }
 };
 
-// Create or Update user visitor
-export const createVisitor = (formData, history) => async (dispatch) => {
+// Create visitor
+export const createVisitor = (formData, history, edit = false) => async (
+  dispatch
+) => {
   try {
     const res = await axios.post('/api/visitor', formData);
 
@@ -72,8 +79,13 @@ export const createVisitor = (formData, history) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Visitor Created', 'success'));
-    history.push('/register_visitor'); // Q: redirect to search visitors or add a new visitor?
+    dispatch(setAlert(edit ? 'Visitor Updated' : 'Visitor Created', 'success'));
+
+    if (!edit) {
+      history.push('/register_visitor'); // Q: redirect to search visitors or add a new visitor?
+    } else {
+      history.push('/visitors');
+    }
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -88,4 +100,44 @@ export const createVisitor = (formData, history) => async (dispatch) => {
   }
 };
 
+<<<<<<< HEAD
 // filtered
+=======
+// delete visitor
+export const deleteVisitor = (id) => async (dispatch) => {
+  if (window.confirm('¿Estas seguro? ¡¡Esto no puede deshacerse!!')) {
+    try {
+      const res = await axios.delete(`/api/visitor/${id}`);
+
+      dispatch({
+        type: GET_VISITOR,
+        payload: res.data,
+      });
+
+      dispatch(setAlert('Visitor Removed', 'danger'));
+      window.location.reload();
+    } catch (err) {
+      dispatch({
+        type: VISITOR_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  }
+};
+
+// Change search Field
+export const setSearchField = (text) => {
+  return {
+    type: CHANGE_SEARCH_FIELD,
+    payload: text,
+  };
+};
+
+// Change search Field 2
+export const setSearchField2 = (text) => {
+  return {
+    type: CHANGE_SEARCH_FIELD2,
+    payload: text,
+  };
+};
+>>>>>>> master

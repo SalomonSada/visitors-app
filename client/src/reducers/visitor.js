@@ -4,12 +4,20 @@ import {
   VISITOR_ERROR,
   CLEAR_VISITOR,
   CHANGE_SEARCH_FIELD,
+<<<<<<< HEAD
+=======
+  CHANGE_SEARCH_FIELD2,
+>>>>>>> master
 } from '../actions/types';
 
 const initialState = {
   visitors: [],
   loading: true,
   searchField: '',
+<<<<<<< HEAD
+=======
+  searchFieldToDate: '',
+>>>>>>> master
 };
 
 export default function visitor(state = initialState, action) {
@@ -17,7 +25,7 @@ export default function visitor(state = initialState, action) {
 
   switch (type) {
     case GET_VISITOR:
-      // case UPDATE_PROFILE:
+      // case UPDATE_VISITOR:
       return {
         ...state,
         visitor: payload,
@@ -34,6 +42,12 @@ export default function visitor(state = initialState, action) {
     case CHANGE_SEARCH_FIELD:
       return { ...state, searchField: payload };
 
+<<<<<<< HEAD
+=======
+    case CHANGE_SEARCH_FIELD2:
+      return { ...state, searchFieldToDate: payload };
+
+>>>>>>> master
     case VISITOR_ERROR:
       return {
         ...state,
@@ -44,7 +58,7 @@ export default function visitor(state = initialState, action) {
     case CLEAR_VISITOR:
       return {
         ...state,
-        profile: null,
+        visitor: null,
         loading: false,
       };
 
