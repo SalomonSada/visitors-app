@@ -6,12 +6,8 @@ import {
   GET_VISITOR,
   GET_VISITORS,
   VISITOR_ERROR,
-<<<<<<< HEAD
-  //CHANGE_SEARCH_FIELD,
-=======
   CHANGE_SEARCH_FIELD,
   CHANGE_SEARCH_FIELD2,
->>>>>>> master
 } from './types';
 
 // Get current visitor
@@ -37,7 +33,7 @@ export const getAllVisitors = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/visitor');
 
-   // console.log(res.data[0].name);
+    // console.log(res.data[0].name);
 
     dispatch({
       type: GET_VISITORS,
@@ -68,41 +64,40 @@ export const getVisitorById = (visitorId) => async (dispatch) => {
 };
 
 // Create visitor
-export const createVisitor = (formData, history, edit = false) => async (
-  dispatch
-) => {
-  try {
-    const res = await axios.post('/api/visitor', formData);
+export const createVisitor =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.post('/api/visitor', formData);
 
-    dispatch({
-      type: GET_VISITOR,
-      payload: res.data,
-    });
+      dispatch({
+        type: GET_VISITOR,
+        payload: res.data,
+      });
 
-    dispatch(setAlert(edit ? 'Visitor Updated' : 'Visitor Created', 'success'));
+      dispatch(
+        setAlert(edit ? 'Visitor Updated' : 'Visitor Created', 'success')
+      );
 
-    if (!edit) {
-      history.push('/register_visitor'); // Q: redirect to search visitors or add a new visitor?
-    } else {
-      history.push('/visitors');
+      if (!edit) {
+        history.push('/register_visitor'); // Q: redirect to search visitors or add a new visitor?
+      } else {
+        history.push('/visitors');
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: VISITOR_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
     }
-  } catch (err) {
-    const errors = err.response.data.errors;
+  };
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    dispatch({
-      type: VISITOR_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-<<<<<<< HEAD
-// filtered
-=======
 // delete visitor
 export const deleteVisitor = (id) => async (dispatch) => {
   if (window.confirm('¿Estas seguro? ¡¡Esto no puede deshacerse!!')) {
@@ -140,4 +135,3 @@ export const setSearchField2 = (text) => {
     payload: text,
   };
 };
->>>>>>> master

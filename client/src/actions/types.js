@@ -15,10 +15,6 @@ export const GET_VISITOR = 'GET_VISITOR';
 export const GET_VISITORS = 'GET_VISITORS';
 export const VISITOR_ERROR = 'VISITOR_ERROR';
 export const CLEAR_VISITOR = 'CLEAR_VISITOR';
-<<<<<<< HEAD
-export const CHANGE_SEARCH_FIELD = 'CHANGE_SEARCH_FIELD';
-=======
 // SearchField
 export const CHANGE_SEARCH_FIELD = 'CHANGE_SEARCH_FIELD';
 export const CHANGE_SEARCH_FIELD2 = 'CHANGE_SEARCH_FIELD2';
->>>>>>> master

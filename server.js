@@ -1,10 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
-<<<<<<< HEAD
-const pathh = require('path');
-=======
 const path = require('path');
->>>>>>> master
+
 
 const app = express();
 
